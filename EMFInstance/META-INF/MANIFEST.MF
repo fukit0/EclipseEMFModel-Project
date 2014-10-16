@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: EMFInstance
+Bundle-SymbolicName: EMFInstance
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: emfinstance.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.emf.ecore;bundle-version="2.10.0",
+ org.eclipse.emf.ecore.xmi;bundle-version="2.10.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Import-Package: EMFModel.Graph
