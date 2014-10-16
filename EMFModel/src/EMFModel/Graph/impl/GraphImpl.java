@@ -7,16 +7,13 @@ import EMFModel.Graph.GraphPackage;
 import EMFModel.Graph.Node;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -42,7 +39,7 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Node> nodes;
+	private List<Node> nodes;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -51,6 +48,8 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 	 */
 	protected GraphImpl() {
 		super();
+		nodes = new EObjectContainmentEList<Node>(Node.class, this, GraphPackage.GRAPH__NODES);
+		
 	}
 
 	/**
@@ -68,7 +67,7 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Node> getNodes() {
+	public List<Node> getNodes() {
 		if (nodes == null) {
 			nodes = new EObjectContainmentEList<Node>(Node.class, this, GraphPackage.GRAPH__NODES);
 		}
@@ -148,15 +147,21 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 		}
 		return super.eIsSet(featureID);
 	}
-	
-	
-	public void addNode(Node n){
-		nodes.add(n);
+
+	@Override
+	public void addNode(Node value) {
+		// TODO Auto-generated method stub
+		
+		nodes.add(value);
+	}
+
+	@Override
+	public void deleteNode(Node value) {
+		// TODO Auto-generated method stub
+		nodes.remove(value);
 	}
 	
-	public void deleteNode(Node n){
-		nodes.remove(n);		
-	}
+	
 	
 	
 

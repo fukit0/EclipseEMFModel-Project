@@ -2,8 +2,9 @@
  */
 package EMFModel.Graph;
 
-import org.eclipse.emf.common.util.EList;
+import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -37,8 +38,9 @@ public interface Graph extends EObject {
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<Node> getNodes();
-	
+	List<Node> getNodes();
+	void addNode(Node value);
+	void deleteNode(Node value);
 	
 	
 	
