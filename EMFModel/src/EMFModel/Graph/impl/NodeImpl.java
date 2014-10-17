@@ -287,4 +287,20 @@ public class NodeImpl extends MinimalEObjectImpl.Container implements Node {
 		return nodes;
 	}
 
+	@Override
+	public ArrayList<Node> getChildSources() {
+		// TODO Auto-generated method stub
+		
+		ArrayList<Node> nodes = new ArrayList<Node>();
+		
+		for(Edge e : this.getIncoming()){
+			
+			if(e.getRelation().equals("child")){
+				nodes.add(e.getSource());
+			}
+		}
+			
+		return nodes;
+	}
+
 } //NodeImpl

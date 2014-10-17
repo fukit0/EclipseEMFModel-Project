@@ -1,6 +1,8 @@
 package emfinstance;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -28,18 +30,43 @@ public class CreateSaveTester {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		Graph myGraph = loadGraph();
+		// Initialize the model
+	    GraphPackage.eINSTANCE.eClass();
+	    
+	    //GraphFactory factory = GraphFactory.eINSTANCE;
+	    // Register the XMI resource factory for the .website extension
+	    Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
+	    Map<String, Object> m = reg.getExtensionToFactoryMap();
+	    m.put("graph", new XMIResourceFactoryImpl());
+	    
+	    // Obtain a new resource set
+	    ResourceSet resSet = new ResourceSetImpl();
+
+	    // Get the resource
+	    Resource resource = resSet.getResource(URI.createURI("FamilyGraph/My.graph"), true);
+	    // Get the first model element and cast it to the right type, in my
+	    // example everything is hierarchical included in this first node
+	    Graph myGraph = (Graph) resource.getContents().get(0);
+	    
+		//Graph myGraph = loadGraph();
 	    
 		//printGraph(myGraph.getNodes());	    
 	    
+		findHusWif(myGraph.getNodes());
 	    findBroSis(myGraph.getNodes());
-	    //findHusWif(myGraph.getNodes());
-	    	    
-	    // saveGraph(myGraph);
+	        
+	    //saveGraph(myGraph);
+	    try {
+	        resource.save(Collections.EMPTY_MAP);
+	      } catch (IOException e) {
+	        e.printStackTrace();
+	      }
 	    
 	    printGraph(myGraph.getNodes());	  
 	}
 	
+	
+
 	public static void printGraph(EList<Node> nodes) {
 		// TODO Auto-generated method stub
 		
@@ -80,23 +107,13 @@ public class CreateSaveTester {
 		// TODO Auto-generated method stub
 		
 		for(Node n : nodes){
-			int counter = 0;
 			
-			EList<Edge> incomingEdges = n.getIncoming();
-			
-			for(int i = 0; i < incomingEdges.size(); i++){
-				
-				if(incomingEdges.get(i).getRelation().equals("child")){
-					counter++;
-				}
-			}
-			
-			if(counter == 2){
-				
+			if(n.getChildSources().size() == 2){
+					
 				Edge newEdge = factory.createEdge();
 				newEdge.setRelation("husband/wife");
-				newEdge.setSource(incomingEdges.get(0).getSource());
-				newEdge.setTarget(incomingEdges.get(1).getSource());
+				newEdge.setSource(n.getChildSources().get(0));
+				newEdge.setTarget(n.getChildSources().get(1));		
 				
 			}
 		}

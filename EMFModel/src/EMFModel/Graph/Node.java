@@ -89,5 +89,7 @@ public interface Node extends EObject {
 	EList<Edge> getIncoming();
 	
 	ArrayList<Node> getChildTargets();
+	
+	ArrayList<Node> getChildSources();
 
 } // Node
