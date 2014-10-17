@@ -1,5 +1,6 @@
 package emfinstance;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.eclipse.emf.ecore.EDataType.Internal.ConversionDelegate.Factory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import EMFModel.Graph.Edge;
@@ -31,8 +33,10 @@ public class CreateSaveTester {
 		//printGraph(myGraph.getNodes());	    
 	    
 	    findBroSis(myGraph.getNodes());
-	    findHusWif(myGraph.getNodes());
+	    //findHusWif(myGraph.getNodes());
 	    	    
+	    // saveGraph(myGraph);
+	    
 	    printGraph(myGraph.getNodes());	  
 	}
 	
@@ -104,28 +108,29 @@ public class CreateSaveTester {
 		
 		//EList<Node> nodeList = myGraph.getNodes();		
 		for(Node n : nodes){		
-			EList<Edge> outgoingEdges = n.getOutgoing();
+			//EList<Edge> outgoingEdges = n.getOutgoing();
 			
-			if(outgoingEdges.size() > 1){				
+			if(n.getChildTargets().size() > 1){				
 				
-				int index = 0;				
-				for(Edge e : outgoingEdges){					
+				int x = 0;
+				
+				for(Node node : n.getChildTargets()){					
 					
-					for(int i=0 ; i<outgoingEdges.size()-index-1 ; i++){
+					for(int i=0 ; i<n.getChildTargets().size()-x-1 ; i++){
 											
 						Edge newEdge = factory.createEdge();
 						newEdge.setRelation("brother/sister");
 						
-						Node sourceNode = e.getTarget();
+						Node sourceNode = node;
 						newEdge.setSource(sourceNode); 
 						
-						Node targetSource = outgoingEdges.get(index+1+i).getTarget();
+						Node targetSource = n.getChildTargets().get(x+1+i);
 						newEdge.setTarget(targetSource); 
 						
 						findUncleAuntRelation(sourceNode,targetSource);
 						
 					}				
-					index++;
+					x++;
 				}
 			}
 		}
@@ -134,12 +139,16 @@ public class CreateSaveTester {
 	public static void findUncleAuntRelation(Node x, Node y) {
 		// TODO Auto-generated method stub
 		
+		List<Node> c1 = new ArrayList<Node>();
+		List<Node> c2 = new ArrayList<Node>();
+		
 		if(y.getOutgoing().size() > 0){
 			
 			for(Edge e : y.getOutgoing()){
 				
 				if(e.getRelation().equals("child")){
 					
+					c1.add(e.getTarget());
 					Edge newEdge = factory.createEdge();
 					newEdge.setRelation("uncle/aunt");
 					newEdge.setSource(x);
@@ -153,7 +162,8 @@ public class CreateSaveTester {
 			for(Edge e : x.getOutgoing()){
 							
 				if(e.getRelation().equals("child")){
-
+					
+					c2.add(e.getTarget());
 					Edge newEdge = factory.createEdge();
 					newEdge.setRelation("uncle/aunt");
 					newEdge.setSource(y);
@@ -161,6 +171,28 @@ public class CreateSaveTester {
 				}
 			}
 		}
+		
+		findCousin(c1,c2);
+		
+	}
+
+	public static void findCousin(List<Node> list1, List<Node> list2) {
+		// TODO Auto-generated method stub
+		
+		//int count1 = list1.size();
+		//int count2 = list2.size();
+		
+		for(Node node1 : list1){
+			
+			for(Node node2 : list2){
+				
+				Edge edge = factory.createEdge();
+				edge.setRelation("cousin");
+				edge.setSource(node1);
+				edge.setTarget(node2);
+			}
+		}
+		
 		
 	}
 	

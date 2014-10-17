@@ -6,19 +6,17 @@ import EMFModel.Graph.Edge;
 import EMFModel.Graph.GraphPackage;
 import EMFModel.Graph.Node;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -271,6 +269,22 @@ public class NodeImpl extends MinimalEObjectImpl.Container implements Node {
 		result.append(name);
 		result.append(')');
 		return result.toString();
+	}
+
+	@Override
+	public ArrayList<Node> getChildTargets() {
+		// TODO Auto-generated method stub
+		
+		ArrayList<Node> nodes = new ArrayList<Node>();
+		
+		for(Edge e : this.getOutgoing()){
+			
+			if(e.getRelation().equals("child")){
+				nodes.add(e.getTarget());
+			}
+		}
+			
+		return nodes;
 	}
 
 } //NodeImpl

@@ -10,11 +10,22 @@
   <nodes name="C" incoming="//@nodes.3/@outgoing.1">
     <outgoing target="//@nodes.4" relation="child"/>
   </nodes>
-  <nodes name="D">
+  <nodes name="D" incoming="//@nodes.7/@outgoing.0">
     <outgoing target="//@nodes.1" relation="child"/>
     <outgoing target="//@nodes.2" relation="child"/>
   </nodes>
   <nodes name="E" incoming="//@nodes.2/@outgoing.0"/>
   <nodes name="F" incoming="//@nodes.0/@outgoing.0 //@nodes.1/@outgoing.0"/>
   <nodes name="G" incoming="//@nodes.1/@outgoing.1"/>
+  <nodes name="J">
+    <outgoing target="//@nodes.3" relation="child"/>
+    <outgoing target="//@nodes.8" relation="child"/>
+  </nodes>
+  <nodes name="H" incoming="//@nodes.7/@outgoing.1">
+    <outgoing target="//@nodes.9" relation="child"/>
+  </nodes>
+  <nodes name="I" incoming="//@nodes.8/@outgoing.0">
+    <outgoing target="//@nodes.10" relation="child"/>
+  </nodes>
+  <nodes name="K" incoming="//@nodes.9/@outgoing.0"/>
 </Graph:Graph>

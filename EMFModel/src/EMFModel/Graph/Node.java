@@ -2,8 +2,9 @@
  */
 package EMFModel.Graph;
 
-import org.eclipse.emf.common.util.EList;
+import java.util.ArrayList;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -86,5 +87,7 @@ public interface Node extends EObject {
 	 * @generated
 	 */
 	EList<Edge> getIncoming();
+	
+	ArrayList<Node> getChildTargets();
 
 } // Node
