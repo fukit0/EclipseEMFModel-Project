@@ -148,6 +148,11 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 		return super.eIsSet(featureID);
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public void addNode(Node value) {
 		// TODO Auto-generated method stub
@@ -155,6 +160,11 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 		nodes.add(value);
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public void deleteNode(Node value) {
 		// TODO Auto-generated method stub

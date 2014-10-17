@@ -271,6 +271,11 @@ public class NodeImpl extends MinimalEObjectImpl.Container implements Node {
 		return result.toString();
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public ArrayList<Node> getChildTargets() {
 		// TODO Auto-generated method stub
@@ -287,6 +292,11 @@ public class NodeImpl extends MinimalEObjectImpl.Container implements Node {
 		return nodes;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public ArrayList<Node> getChildSources() {
 		// TODO Auto-generated method stub

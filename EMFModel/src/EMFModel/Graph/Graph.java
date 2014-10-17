@@ -39,7 +39,19 @@ public interface Graph extends EObject {
 	 * @generated
 	 */
 	EList<Node> getNodes();
+	
+	/**
+	 * add node to graph
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 */
 	void addNode(Node value);
+	
+	/**
+	 * delete particular node from graph
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 */
 	void deleteNode(Node value);
 	
 	

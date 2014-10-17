@@ -88,8 +88,20 @@ public interface Node extends EObject {
 	 */
 	EList<Edge> getIncoming();
 	
+	/**
+	 * Returns the list of nodes which are child of particular node.
+	 * The list contents are of type {@link EMFModel.Graph.Node}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 */
 	ArrayList<Node> getChildTargets();
 	
+	/**
+	 * Returns the list of nodes which are father and mother of particular node.
+	 * The list contents are of type {@link EMFModel.Graph.Node}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 */
 	ArrayList<Node> getChildSources();
 
 } // Node
