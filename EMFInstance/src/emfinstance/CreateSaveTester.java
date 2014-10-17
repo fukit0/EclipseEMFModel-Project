@@ -31,7 +31,7 @@ public class CreateSaveTester {
 		//printGraph(myGraph.getNodes());	    
 	    
 	    findBroSis(myGraph.getNodes());
-	    //findHusWif(myGraph.getNodes());
+	    findHusWif(myGraph.getNodes());
 	    	    
 	    printGraph(myGraph.getNodes());	  
 	}
@@ -76,9 +76,18 @@ public class CreateSaveTester {
 		// TODO Auto-generated method stub
 		
 		for(Node n : nodes){
+			int counter = 0;
+			
 			EList<Edge> incomingEdges = n.getIncoming();
 			
-			if(incomingEdges.size() == 2){
+			for(int i = 0; i < incomingEdges.size(); i++){
+				
+				if(incomingEdges.get(i).getRelation().equals("child")){
+					counter++;
+				}
+			}
+			
+			if(counter == 2){
 				
 				Edge newEdge = factory.createEdge();
 				newEdge.setRelation("husband/wife");
