@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Graph:Graph xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:Graph="Graph">
-  <nodes name="1">
-    <outgoing target="//@nodes.1" relation="5"/>
+  <nodes name="A">
+    <outgoing target="//@nodes.5" relation="child"/>
   </nodes>
-  <nodes name="2" incoming="//@nodes.0/@outgoing.0"/>
+  <nodes name="B" incoming="//@nodes.3/@outgoing.0">
+    <outgoing target="//@nodes.5" relation="child"/>
+    <outgoing target="//@nodes.6" relation="child"/>
+  </nodes>
+  <nodes name="C" incoming="//@nodes.3/@outgoing.1">
+    <outgoing target="//@nodes.4" relation="child"/>
+  </nodes>
+  <nodes name="D">
+    <outgoing target="//@nodes.1" relation="child"/>
+    <outgoing target="//@nodes.2" relation="child"/>
+  </nodes>
+  <nodes name="E" incoming="//@nodes.2/@outgoing.0"/>
+  <nodes name="F" incoming="//@nodes.0/@outgoing.0 //@nodes.1/@outgoing.0"/>
+  <nodes name="G" incoming="//@nodes.1/@outgoing.1"/>
 </Graph:Graph>

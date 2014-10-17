@@ -38,7 +38,7 @@ public interface Graph extends EObject {
 	 * @model containment="true"
 	 * @generated
 	 */
-	List<Node> getNodes();
+	EList<Node> getNodes();
 	void addNode(Node value);
 	void deleteNode(Node value);
 	
