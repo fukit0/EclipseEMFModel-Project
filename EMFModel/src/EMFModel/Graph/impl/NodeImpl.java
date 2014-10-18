@@ -272,9 +272,14 @@ public class NodeImpl extends MinimalEObjectImpl.Container implements Node {
 	}
 
 	/**
+	 * Returns the list of nodes which are children of particular node.
+	 * 
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
+	 * 
+	 * @return list of child nodes 
 	 */
 	@Override
 	public ArrayList<Node> getChildTargets() {
@@ -293,9 +298,14 @@ public class NodeImpl extends MinimalEObjectImpl.Container implements Node {
 	}
 
 	/**
+	 * Returns the list of nodes which are parents of particular node.
+	 * 
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
+	 * 
+	 * @return list of parent nodes 
 	 */
 	@Override
 	public ArrayList<Node> getChildSources() {

@@ -27,6 +27,12 @@ public class CreateSaveTester {
 
 	public static GraphFactory factory = GraphFactory.eINSTANCE;
 	
+	private final static String BROTHER_SISTER_RELATION = "brother/sister";
+	private final static String COUSIN_RELATION = "cousin";
+	private final static String UNCLE_AUNT_RELATION = "uncle/aunt";
+	private final static String HUSBAND_WIFE_RELATION = "husband/wife";
+	private final static String CHILD_RELATION = "child";
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
@@ -34,7 +40,7 @@ public class CreateSaveTester {
 	    GraphPackage.eINSTANCE.eClass();
 	    
 	    //GraphFactory factory = GraphFactory.eINSTANCE;
-	    // Register the XMI resource factory for the .website extension
+	    // Register the XMI resource factory for the .graph extension
 	    Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
 	    Map<String, Object> m = reg.getExtensionToFactoryMap();
 	    m.put("graph", new XMIResourceFactoryImpl());
@@ -52,8 +58,8 @@ public class CreateSaveTester {
 	    
 		//printGraph(myGraph.getNodes());	    
 	    
-		findHusWif(myGraph.getNodes());
-	    findBroSis(myGraph.getNodes());
+		findHusbandWifeRelation(myGraph.getNodes());
+	    findBrotherSisterRelation(myGraph.getNodes());
 	        
 	    //saveGraph(myGraph);
 	    try {
@@ -66,7 +72,13 @@ public class CreateSaveTester {
 	}
 	
 	
-
+	/**
+     * Method to print-out nodes and relations between them in graph
+     *
+     * @param EList<> list of nodes in graph
+     * 
+     * @return void
+     */
 	public static void printGraph(EList<Node> nodes) {
 		// TODO Auto-generated method stub
 		
@@ -82,6 +94,11 @@ public class CreateSaveTester {
 		}
 	}
 
+	/**
+     * Method to open .graph file, create an instance
+     *
+     * @return Graph instance 
+     */
 	public static Graph loadGraph() {
 		// Initialize the model
 	    GraphPackage.eINSTANCE.eClass();
@@ -103,24 +120,41 @@ public class CreateSaveTester {
 	    return myGraph;
 	  }
 
-	public static void findHusWif(EList<Node> nodes) {
+	/**
+     * Method to find parent nodes of a node and add an edge between them
+     * 
+     * @param EList<> list of nodes in graph
+     * 
+     * @return void
+     */
+	public static void findHusbandWifeRelation(EList<Node> nodes) {
 		// TODO Auto-generated method stub
 		
 		for(Node n : nodes){
 			
 			if(n.getChildSources().size() == 2){
-					
+				/*	
 				Edge newEdge = factory.createEdge();
-				newEdge.setRelation("husband/wife");
+				newEdge.setRelation(HUSBAND_WIFE_RELATION);
 				newEdge.setSource(n.getChildSources().get(0));
-				newEdge.setTarget(n.getChildSources().get(1));		
+				newEdge.setTarget(n.getChildSources().get(1));
+				*/
+				addNewEdge(n.getChildSources().get(0), n.getChildSources().get(1), HUSBAND_WIFE_RELATION);				
 				
 			}
 		}
 		
 	}
 
-	public static void findBroSis(EList<Node> nodes) {
+	
+	/**
+     * Method to find nodes which has same parent nodes and add an edge between them
+     *
+     * @param EList<> list of nodes in graph
+     * 
+     * @return void
+     */
+	public static void findBrotherSisterRelation(EList<Node> nodes) {
 		// TODO Auto-generated method stub
 		
 		//EList<Node> nodeList = myGraph.getNodes();		
@@ -135,16 +169,17 @@ public class CreateSaveTester {
 					
 					for(int i=0 ; i<n.getChildTargets().size()-x-1 ; i++){
 											
-						Edge newEdge = factory.createEdge();
-						newEdge.setRelation("brother/sister");
-						
+						//Edge newEdge = factory.createEdge();
+						//newEdge.setRelation(BROTHER_SISTER_RELATION);
 						Node sourceNode = node;
-						newEdge.setSource(sourceNode); 
+						//newEdge.setSource(sourceNode); 
+						Node targetNode = n.getChildTargets().get(x+1+i);
+						//newEdge.setTarget(targetSource);
 						
-						Node targetSource = n.getChildTargets().get(x+1+i);
-						newEdge.setTarget(targetSource); 
 						
-						findUncleAuntRelation(sourceNode,targetSource);
+						addNewEdge(sourceNode, targetNode, BROTHER_SISTER_RELATION);
+						
+						findUncleAuntRelation(sourceNode,targetNode);
 						
 					}				
 					x++;
@@ -153,23 +188,35 @@ public class CreateSaveTester {
 		}
 	}
 
+	/**
+     * Method to find parent nodes of a node and add an edge between them
+     * 
+     * @param Node a node specify source
+     * 
+     * @param Node a node specify target
+     * 
+     * @return void
+     */
 	public static void findUncleAuntRelation(Node x, Node y) {
 		// TODO Auto-generated method stub
 		
-		List<Node> c1 = new ArrayList<Node>();
-		List<Node> c2 = new ArrayList<Node>();
+		List<Node> childList1 = new ArrayList<Node>();
+		List<Node> childList2 = new ArrayList<Node>();
 		
 		if(y.getOutgoing().size() > 0){
 			
 			for(Edge e : y.getOutgoing()){
 				
-				if(e.getRelation().equals("child")){
+				if(e.getRelation().equals(CHILD_RELATION)){
 					
-					c1.add(e.getTarget());
+					childList1.add(e.getTarget());
+					/*
 					Edge newEdge = factory.createEdge();
-					newEdge.setRelation("uncle/aunt");
+					newEdge.setRelation(UNCLE_AUNT_RELATION);
 					newEdge.setSource(x);
 					newEdge.setTarget(e.getTarget());
+					*/
+					addNewEdge(x, e.getTarget(), UNCLE_AUNT_RELATION);
 				}
 			}
 		}
@@ -178,22 +225,34 @@ public class CreateSaveTester {
 			
 			for(Edge e : x.getOutgoing()){
 							
-				if(e.getRelation().equals("child")){
+				if(e.getRelation().equals(CHILD_RELATION)){
 					
-					c2.add(e.getTarget());
+					childList2.add(e.getTarget());
+					/*
 					Edge newEdge = factory.createEdge();
-					newEdge.setRelation("uncle/aunt");
+					newEdge.setRelation(UNCLE_AUNT_RELATION);
 					newEdge.setSource(y);
 					newEdge.setTarget(e.getTarget());
+					*/
+					addNewEdge(y, e.getTarget(), UNCLE_AUNT_RELATION);
 				}
 			}
 		}
 		
-		findCousin(c1,c2);
+		findCousinRelation(childList1,childList2);
 		
 	}
 
-	public static void findCousin(List<Node> list1, List<Node> list2) {
+	/**
+     * Method to find nodes which their parent nodes have bro/sis relation and add edges between them
+     *
+     * @param List<> list of child nodes 
+     * 
+     * @param List<> list of child nodes
+     * 
+     * @return void
+     */
+	public static void findCousinRelation(List<Node> list1, List<Node> list2) {
 		// TODO Auto-generated method stub
 		
 		//int count1 = list1.size();
@@ -203,13 +262,37 @@ public class CreateSaveTester {
 			
 			for(Node node2 : list2){
 				
-				Edge edge = factory.createEdge();
-				edge.setRelation("cousin");
-				edge.setSource(node1);
-				edge.setTarget(node2);
+				/*
+				Edge newEdge = factory.createEdge();
+				newEdge.setRelation(COUSIN_RELATION);
+				newEdge.setSource(node1);
+				newEdge.setTarget(node2);
+				*/
+				
+				addNewEdge(node1, node2, COUSIN_RELATION);
 			}
 		}
 		
+		
+	}
+	
+	/**
+     * Method to find nodes which their parent nodes have bro/sis relation and add edges between them
+     *
+     * @param Node source node of edge that will be added
+     * 
+     * @param Node target node of edge that will be added
+     * 
+     * @param String relation that will be presented between two nodes
+     * 
+     * @return void
+     */
+	public static void addNewEdge(Node sourceNode, Node targetNode, String relation){
+		
+		Edge newEdge = factory.createEdge();
+		newEdge.setRelation(relation);
+		newEdge.setSource(sourceNode);
+		newEdge.setTarget(targetNode);
 		
 	}
 	

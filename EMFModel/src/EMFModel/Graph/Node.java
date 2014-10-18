@@ -89,7 +89,7 @@ public interface Node extends EObject {
 	EList<Edge> getIncoming();
 	
 	/**
-	 * Returns the list of nodes which are child of particular node.
+	 * Returns the list of nodes which are children of particular node.
 	 * The list contents are of type {@link EMFModel.Graph.Node}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -97,7 +97,7 @@ public interface Node extends EObject {
 	ArrayList<Node> getChildTargets();
 	
 	/**
-	 * Returns the list of nodes which are father and mother of particular node.
+	 * Returns the list of nodes which are parents of particular node.
 	 * The list contents are of type {@link EMFModel.Graph.Node}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
