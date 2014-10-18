@@ -314,6 +314,17 @@ public class CreateSaveTester {
 		
 	}
 	
+	/**
+     * Method to determine whether two nodes were connected before with same relation
+     *
+     * @param Node source node of edge 
+     * 
+     * @param Node target node of edge 
+     * 
+     * @param String relation between two nodes
+     * 
+     * @return boolean
+     */
 	public static boolean isConnected(Node sourceNode, Node targetNode, String Relation){
 		
 		List<Edge> outgoinEdges = sourceNode.getOutgoing();
