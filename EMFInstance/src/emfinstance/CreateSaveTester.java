@@ -139,7 +139,14 @@ public class CreateSaveTester {
 				newEdge.setSource(n.getChildSources().get(0));
 				newEdge.setTarget(n.getChildSources().get(1));
 				*/
-				addNewEdge(n.getChildSources().get(0), n.getChildSources().get(1), HUSBAND_WIFE_RELATION);				
+				Node sourceNode = n.getChildSources().get(0);
+				Node targetNode = n.getChildSources().get(1);
+				
+				if(!isConnected(sourceNode, targetNode, HUSBAND_WIFE_RELATION)){
+					
+					addNewEdge(sourceNode, targetNode, HUSBAND_WIFE_RELATION);				
+
+				}
 				
 			}
 		}
@@ -176,8 +183,10 @@ public class CreateSaveTester {
 						Node targetNode = n.getChildTargets().get(x+1+i);
 						//newEdge.setTarget(targetSource);
 						
-						
-						addNewEdge(sourceNode, targetNode, BROTHER_SISTER_RELATION);
+						if(!isConnected(sourceNode, targetNode, BROTHER_SISTER_RELATION)){
+							addNewEdge(sourceNode, targetNode, BROTHER_SISTER_RELATION);
+
+						}
 						
 						findUncleAuntRelation(sourceNode,targetNode);
 						
@@ -216,7 +225,11 @@ public class CreateSaveTester {
 					newEdge.setSource(x);
 					newEdge.setTarget(e.getTarget());
 					*/
-					addNewEdge(x, e.getTarget(), UNCLE_AUNT_RELATION);
+					if(!isConnected(x, e.getTarget(), UNCLE_AUNT_RELATION)){
+						
+						addNewEdge(x, e.getTarget(), UNCLE_AUNT_RELATION);
+
+					}
 				}
 			}
 		}
@@ -234,7 +247,10 @@ public class CreateSaveTester {
 					newEdge.setSource(y);
 					newEdge.setTarget(e.getTarget());
 					*/
-					addNewEdge(y, e.getTarget(), UNCLE_AUNT_RELATION);
+					if(!isConnected(y, e.getTarget(), UNCLE_AUNT_RELATION)){
+						
+						addNewEdge(y, e.getTarget(), UNCLE_AUNT_RELATION);
+					}
 				}
 			}
 		}
@@ -268,8 +284,10 @@ public class CreateSaveTester {
 				newEdge.setSource(node1);
 				newEdge.setTarget(node2);
 				*/
+				if(!isConnected(node1, node2, COUSIN_RELATION)){
+					addNewEdge(node1, node2, COUSIN_RELATION);
+				}
 				
-				addNewEdge(node1, node2, COUSIN_RELATION);
 			}
 		}
 		
@@ -294,6 +312,21 @@ public class CreateSaveTester {
 		newEdge.setSource(sourceNode);
 		newEdge.setTarget(targetNode);
 		
+	}
+	
+	public static boolean isConnected(Node sourceNode, Node targetNode, String Relation){
+		
+		List<Edge> outgoinEdges = sourceNode.getOutgoing();
+		
+		for(Edge e : outgoinEdges){
+			
+			if(e.getTarget() == targetNode && e.getRelation().equals(Relation))
+			{
+				return true;
+			}
+			
+		}
+		return false;
 	}
 	
 	
