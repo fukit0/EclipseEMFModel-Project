@@ -25,7 +25,8 @@ import EMFModel.Graph.Node;
 
 public class CreateSaveTester {
 
-	public static GraphFactory factory = GraphFactory.eINSTANCE;
+	private static GraphFactory factory = GraphFactory.eINSTANCE;
+	private static Resource resource;
 	
 	private final static String BROTHER_SISTER_RELATION = "brother/sister";
 	private final static String COUSIN_RELATION = "cousin";
@@ -36,42 +37,36 @@ public class CreateSaveTester {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		// Initialize the model
-	    GraphPackage.eINSTANCE.eClass();
-	    
-	    //GraphFactory factory = GraphFactory.eINSTANCE;
-	    // Register the XMI resource factory for the .graph extension
-	    Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-	    Map<String, Object> m = reg.getExtensionToFactoryMap();
-	    m.put("graph", new XMIResourceFactoryImpl());
-	    
-	    // Obtain a new resource set
-	    ResourceSet resSet = new ResourceSetImpl();
-
-	    // Get the resource
-	    Resource resource = resSet.getResource(URI.createURI("FamilyGraph/My.graph"), true);
-	    // Get the first model element and cast it to the right type, in my
-	    // example everything is hierarchical included in this first node
-	    Graph myGraph = (Graph) resource.getContents().get(0);
-	    
-		//Graph myGraph = loadGraph();
+		// Create a new Graph instance from My.graph file
+		Graph myGraph = loadGraph();
 	    
 		//printGraph(myGraph.getNodes());	    
 	    
 		findHusbandWifeRelation(myGraph.getNodes());
 	    findBrotherSisterRelation(myGraph.getNodes());
 	        
-	    //saveGraph(myGraph);
-	    try {
-	        resource.save(Collections.EMPTY_MAP);
-	      } catch (IOException e) {
-	        e.printStackTrace();
-	      }
+	    // Save the graph
+	    saveGraph();
 	    
 	    printGraph(myGraph.getNodes());	  
 	}
 	
 	
+	/**
+     * Method to save updated graph to My.graph file
+     *
+     * @return void
+     */
+	private static void saveGraph() {
+		// TODO Auto-generated method stub
+		try {
+	        resource.save(Collections.EMPTY_MAP);
+	      } catch (IOException e) {
+	        e.printStackTrace();
+	      }
+	}
+
+
 	/**
      * Method to print-out nodes and relations between them in graph
      *
@@ -104,7 +99,7 @@ public class CreateSaveTester {
 	    GraphPackage.eINSTANCE.eClass();
 	    
 	    //GraphFactory factory = GraphFactory.eINSTANCE;
-	    // Register the XMI resource factory for the .website extension
+	    // Register the XMI resource factory for the .graph extension
 	    Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
 	    Map<String, Object> m = reg.getExtensionToFactoryMap();
 	    m.put("graph", new XMIResourceFactoryImpl());
@@ -113,11 +108,11 @@ public class CreateSaveTester {
 	    ResourceSet resSet = new ResourceSetImpl();
 
 	    // Get the resource
-	    Resource resource = resSet.getResource(URI.createURI("FamilyGraph/My.graph"), true);
+	    resource = resSet.getResource(URI.createURI("FamilyGraph/My.graph"), true);
 	    // Get the first model element and cast it to the right type, in my
 	    // example everything is hierarchical included in this first node
-	    Graph myGraph = (Graph) resource.getContents().get(0);
-	    return myGraph;
+	    Graph graph = (Graph) resource.getContents().get(0);
+	    return graph;
 	  }
 
 	/**
@@ -331,12 +326,24 @@ public class CreateSaveTester {
 		
 		for(Edge e : outgoinEdges){
 			
-			if(e.getTarget() == targetNode && e.getRelation().equals(Relation))
+			if(e.getRelation().equals(Relation) && e.getTarget() == targetNode)
 			{
 				return true;
 			}
 			
 		}
+		
+		List<Edge> incomingEdges = sourceNode.getIncoming();
+		
+		for(Edge e : incomingEdges){
+			
+			if(e.getRelation().equals(Relation) && e.getSource() == targetNode)
+			{
+				return true;
+			}
+			
+		}
+		
 		return false;
 	}
 	
