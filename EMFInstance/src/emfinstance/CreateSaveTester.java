@@ -1,6 +1,7 @@
 package emfinstance;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,6 +28,8 @@ public class CreateSaveTester {
 
 	private static GraphFactory factory = GraphFactory.eINSTANCE;
 	private static Resource resource;
+	public static List<Node> childList = new ArrayList<Node>();
+	public static int flag = 0;
 	
 	private final static String BROTHER_SISTER_RELATION = "brother/sister";
 	private final static String COUSIN_RELATION = "cousin";
@@ -44,9 +47,18 @@ public class CreateSaveTester {
 	    
 		findHusbandWifeRelation(myGraph.getNodes());
 	    findBrotherSisterRelation(myGraph.getNodes());
-	        
+	    
+	    List<Node> children = new ArrayList<Node>();
+	    
+	    for(int i=0; i<childList.size(); i++){
+	    	
+	    	children.add(childList.get(i));
+	    }
+	    
+	    findCousinRecursive(children);
+	    
 	    // Save the graph
-	    saveGraph();
+	    //saveGraph();
 	    
 	    printGraph(myGraph.getNodes());	  
 	}
@@ -81,7 +93,13 @@ public class CreateSaveTester {
 			
 			for(Edge e : nodes.get(i).getOutgoing()){
 				System.out.println(nodes.get(i).getName());
-				System.out.println(e.getRelation().toString());
+				System.out.print(e.getRelation().toString());
+				if(e.getDegree()>0){
+					System.out.println(e.getDegree());
+				}
+				else{
+					System.out.print("\n");
+				}
 				System.out.println(e.getTarget().getName());
 			}
 			
@@ -128,12 +146,7 @@ public class CreateSaveTester {
 		for(Node n : nodes){
 			
 			if(n.getChildSources().size() == 2){
-				/*	
-				Edge newEdge = factory.createEdge();
-				newEdge.setRelation(HUSBAND_WIFE_RELATION);
-				newEdge.setSource(n.getChildSources().get(0));
-				newEdge.setTarget(n.getChildSources().get(1));
-				*/
+
 				Node sourceNode = n.getChildSources().get(0);
 				Node targetNode = n.getChildSources().get(1);
 				
@@ -171,13 +184,9 @@ public class CreateSaveTester {
 					
 					for(int i=0 ; i<n.getChildTargets().size()-x-1 ; i++){
 											
-						//Edge newEdge = factory.createEdge();
-						//newEdge.setRelation(BROTHER_SISTER_RELATION);
 						Node sourceNode = node;
-						//newEdge.setSource(sourceNode); 
 						Node targetNode = n.getChildTargets().get(x+1+i);
-						//newEdge.setTarget(targetSource);
-						
+
 						if(!isConnected(sourceNode, targetNode, BROTHER_SISTER_RELATION)){
 							addNewEdge(sourceNode, targetNode, BROTHER_SISTER_RELATION);
 
@@ -192,6 +201,34 @@ public class CreateSaveTester {
 		}
 	}
 
+	
+
+	/**
+     * Method to find nodes which their parent nodes have bro/sis relation and add edges between them
+     *
+     * @param List<> list of child nodes 
+     * 
+     * @param List<> list of child nodes
+     * 
+     * @return void
+     */
+	public static void findCousinRelation(List<Node> list1, List<Node> list2) {
+		// TODO Auto-generated method stub
+			
+		for(Node node1 : list1){
+			
+			for(Node node2 : list2){
+
+				if(!isConnected(node1, node2, COUSIN_RELATION)){
+					addNewEdge(node1, node2, COUSIN_RELATION);
+				}
+				
+			}
+		}
+		
+		
+	}
+	
 	/**
      * Method to find parent nodes of a node and add an edge between them
      * 
@@ -204,8 +241,9 @@ public class CreateSaveTester {
 	public static void findUncleAuntRelation(Node x, Node y) {
 		// TODO Auto-generated method stub
 		
-		List<Node> childList1 = new ArrayList<Node>();
-		List<Node> childList2 = new ArrayList<Node>();
+		
+		//List<Node> childList = new ArrayList<Node>();
+		//List<Node> childList2 = new ArrayList<Node>();
 		
 		if(y.getOutgoing().size() > 0){
 			
@@ -213,13 +251,10 @@ public class CreateSaveTester {
 				
 				if(e.getRelation().equals(CHILD_RELATION)){
 					
-					childList1.add(e.getTarget());
-					/*
-					Edge newEdge = factory.createEdge();
-					newEdge.setRelation(UNCLE_AUNT_RELATION);
-					newEdge.setSource(x);
-					newEdge.setTarget(e.getTarget());
-					*/
+					if(flag == 0){
+						childList.add(e.getTarget());
+					}
+
 					if(!isConnected(x, e.getTarget(), UNCLE_AUNT_RELATION)){
 						
 						addNewEdge(x, e.getTarget(), UNCLE_AUNT_RELATION);
@@ -235,13 +270,10 @@ public class CreateSaveTester {
 							
 				if(e.getRelation().equals(CHILD_RELATION)){
 					
-					childList2.add(e.getTarget());
-					/*
-					Edge newEdge = factory.createEdge();
-					newEdge.setRelation(UNCLE_AUNT_RELATION);
-					newEdge.setSource(y);
-					newEdge.setTarget(e.getTarget());
-					*/
+					if(flag == 0){
+						childList.add(e.getTarget());
+					}
+
 					if(!isConnected(y, e.getTarget(), UNCLE_AUNT_RELATION)){
 						
 						addNewEdge(y, e.getTarget(), UNCLE_AUNT_RELATION);
@@ -250,44 +282,212 @@ public class CreateSaveTester {
 			}
 		}
 		
-		findCousinRelation(childList1,childList2);
+		// findCousinRecursive(childList, 1);
+		flag++;
+	}
+	
+	public static int findCousinRecursive(List<Node> children){
+		
+		
+		// Sadece 1 ebeveyne ait çocuk varsa
+		if(findNumberOfParents(children) < 2){
+			
+			return 0;
+		}
+		
+		// Kuzen ilişkili çocuklar varsa
+		else{
+				
+				makeCousin(children);
+			    children = makeNewList(children);
+
+			return findCousinRecursive(children);
+		}
+	}
+	
+	
+	private static List<Node> makeNewList(List<Node> children) {
+		// TODO Auto-generated method stub
+		
+		List<Node> childList = new ArrayList<Node>();
+		
+		for(Node n : children){
+			
+			List<Edge> outgoingEdges = n.getOutgoing();
+			
+			for(Edge e : outgoingEdges){
+				
+				if(e.getRelation().equals(CHILD_RELATION)){
+					
+					childList.add(e.getTarget());
+				}
+					
+			}
+		}
+		
+		return childList;
+	}
+
+
+	private static void makeCousin(List<Node> children) {
+		// TODO Auto-generated method stub
+		
+		for(int x=0; x<children.size()-1 ; x++){
+			
+			for(int y=x+1; y<children.size(); y++){
+				
+				if(hasDifferentParents(children.get(x),children.get(y)) ){
+					
+					ArrayList<Object> list = getParentRelation(children.get(x), children.get(y));
+					String relation = (String) list.get(0);
+					int deg = (int) list.get(1);
+					
+					switch(relation){
+					
+					case BROTHER_SISTER_RELATION:
+						
+						addNewEdge(children.get(x), children.get(y), COUSIN_RELATION, 1);
+						break;
+						
+					case COUSIN_RELATION:
+						
+						addNewEdge(children.get(x), children.get(y), COUSIN_RELATION, deg+1);
+
+						break;
+						
+					
+					
+					
+					}
+					
+				}
+			}
+			
+			
+		}
 		
 	}
 
-	/**
-     * Method to find nodes which their parent nodes have bro/sis relation and add edges between them
-     *
-     * @param List<> list of child nodes 
-     * 
-     * @param List<> list of child nodes
-     * 
-     * @return void
-     */
-	public static void findCousinRelation(List<Node> list1, List<Node> list2) {
+
+	public static ArrayList<Object> getParentRelation(Node node, Node node2) {
 		// TODO Auto-generated method stub
 		
-		//int count1 = list1.size();
-		//int count2 = list2.size();
+		List<Node> nodeParents = node.getChildSources();
+		List<Node> nodeParents2 = node2.getChildSources();
+		String relation = "";
+		int degree = 0;
 		
-		for(Node node1 : list1){
+		for(Node n : nodeParents){
 			
-			for(Node node2 : list2){
+			List<Edge> incomingEdges = n.getIncoming();
+			List<Edge> outgoingEdges = n.getOutgoing();
+			
+			for(Node n2 : nodeParents2){
 				
-				/*
-				Edge newEdge = factory.createEdge();
-				newEdge.setRelation(COUSIN_RELATION);
-				newEdge.setSource(node1);
-				newEdge.setTarget(node2);
-				*/
-				if(!isConnected(node1, node2, COUSIN_RELATION)){
-					addNewEdge(node1, node2, COUSIN_RELATION);
+				for(Edge e : incomingEdges){
+					
+					if(e.getSource() == n2){
+						relation = e.getRelation();
+						
+						if(relation.equals(COUSIN_RELATION)){
+							degree = e.getDegree();
+						}
+					}
+				}
+				
+				for(Edge e : outgoingEdges){
+					
+					if(e.getTarget() == n2){
+						relation = e.getRelation();
+						
+						if(relation.equals(COUSIN_RELATION)){
+							degree = e.getDegree();
+						}
+					}
 				}
 				
 			}
 		}
 		
+	
+		ArrayList<Object> list = new ArrayList<Object>();
+		
+		
+		
+		list.add(relation);
+		list.add(degree);
+		
+		
+		
+		return list;
+	}
+
+
+	public static void addNewEdge(Node node, Node node2, String cousinRelation, int degree) {
+		// TODO Auto-generated method stub
+		
+		Edge newEdge = factory.createEdge();
+		newEdge.setRelation(cousinRelation);
+		newEdge.setSource(node);
+		newEdge.setTarget(node2);
+		newEdge.setDegree(degree);
 		
 	}
+
+
+	private static boolean hasDifferentParents(Node node, Node node2) {
+		// TODO Auto-generated method stub
+		
+		
+		//parentlardan biri paylaşılıyor olabilir
+		
+		List<Node> parents = node.getChildSources();
+		List<Node> parents2 = node2.getChildSources();
+		
+			for(int i=0; i<parents2.size(); i++){
+				
+				if(parents.contains(parents2.get(i))){
+					
+					return false; 
+				}	
+		}
+		
+		return true;
+	}
+
+
+	public static int findNumberOfParents(List<Node> children){
+		
+		//int numberOfParents = 0;
+		List<Node> parents = new ArrayList<Node>();
+		
+		for(Node childNode : children){
+			
+			List<Edge> incomingEdges = childNode.getIncoming();
+			
+			for(Edge edge : incomingEdges){
+				
+				if(edge.getRelation().equals(CHILD_RELATION)){
+					if(!parents.contains(edge.getSource())){
+						parents.add(edge.getSource());
+					}
+					//numberOfParents++;
+				}
+			}
+			
+		}
+			
+			
+			
+		return parents.size();
+		
+	}
+	
+	public static void addCousinRelations(){
+		
+	}
+	
+	
 	
 	/**
      * Method to find nodes which their parent nodes have bro/sis relation and add edges between them

@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link EMFModel.Graph.Edge#getSource <em>Source</em>}</li>
  *   <li>{@link EMFModel.Graph.Edge#getTarget <em>Target</em>}</li>
  *   <li>{@link EMFModel.Graph.Edge#getRelation <em>Relation</em>}</li>
+ *   <li>{@link EMFModel.Graph.Edge#getDegree <em>Degree</em>}</li>
  * </ul>
  * </p>
  *
@@ -104,5 +105,32 @@ public interface Edge extends EObject {
 	 * @generated
 	 */
 	void setRelation(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Degree</b></em>' attribute.
+	 * The default value is <code>"0"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Degree</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Degree</em>' attribute.
+	 * @see #setDegree(int)
+	 * @see EMFModel.Graph.GraphPackage#getEdge_Degree()
+	 * @model default="0"
+	 * @generated
+	 */
+	int getDegree();
+
+	/**
+	 * Sets the value of the '{@link EMFModel.Graph.Edge#getDegree <em>Degree</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Degree</em>' attribute.
+	 * @see #getDegree()
+	 * @generated
+	 */
+	void setDegree(int value);
 
 } // Edge

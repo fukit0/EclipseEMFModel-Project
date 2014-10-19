@@ -186,13 +186,22 @@ public interface GraphPackage extends EPackage {
 	int EDGE__RELATION = 2;
 
 	/**
+	 * The feature id for the '<em><b>Degree</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE__DEGREE = 3;
+
+	/**
 	 * The number of structural features of the '<em>Edge</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_FEATURE_COUNT = 3;
+	int EDGE_FEATURE_COUNT = 4;
 
 	/**
 	 * The number of operations of the '<em>Edge</em>' class.
@@ -312,6 +321,17 @@ public interface GraphPackage extends EPackage {
 	EAttribute getEdge_Relation();
 
 	/**
+	 * Returns the meta object for the attribute '{@link EMFModel.Graph.Edge#getDegree <em>Degree</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Degree</em>'.
+	 * @see EMFModel.Graph.Edge#getDegree()
+	 * @see #getEdge()
+	 * @generated
+	 */
+	EAttribute getEdge_Degree();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -419,6 +439,14 @@ public interface GraphPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute EDGE__RELATION = eINSTANCE.getEdge_Relation();
+
+		/**
+		 * The meta object literal for the '<em><b>Degree</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EDGE__DEGREE = eINSTANCE.getEdge_Degree();
 
 	}
 

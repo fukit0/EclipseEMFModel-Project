@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *   <li>{@link EMFModel.Graph.impl.EdgeImpl#getSource <em>Source</em>}</li>
  *   <li>{@link EMFModel.Graph.impl.EdgeImpl#getTarget <em>Target</em>}</li>
  *   <li>{@link EMFModel.Graph.impl.EdgeImpl#getRelation <em>Relation</em>}</li>
+ *   <li>{@link EMFModel.Graph.impl.EdgeImpl#getDegree <em>Degree</em>}</li>
  * </ul>
  * </p>
  *
@@ -62,6 +63,26 @@ public class EdgeImpl extends MinimalEObjectImpl.Container implements Edge {
 	 * @ordered
 	 */
 	protected String relation = RELATION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getDegree() <em>Degree</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDegree()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int DEGREE_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getDegree() <em>Degree</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDegree()
+	 * @generated
+	 * @ordered
+	 */
+	protected int degree = DEGREE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -209,6 +230,27 @@ public class EdgeImpl extends MinimalEObjectImpl.Container implements Edge {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public int getDegree() {
+		return degree;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDegree(int newDegree) {
+		int oldDegree = degree;
+		degree = newDegree;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.EDGE__DEGREE, oldDegree, degree));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -269,6 +311,8 @@ public class EdgeImpl extends MinimalEObjectImpl.Container implements Edge {
 				return basicGetTarget();
 			case GraphPackage.EDGE__RELATION:
 				return getRelation();
+			case GraphPackage.EDGE__DEGREE:
+				return getDegree();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -289,6 +333,9 @@ public class EdgeImpl extends MinimalEObjectImpl.Container implements Edge {
 				return;
 			case GraphPackage.EDGE__RELATION:
 				setRelation((String)newValue);
+				return;
+			case GraphPackage.EDGE__DEGREE:
+				setDegree((Integer)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -311,6 +358,9 @@ public class EdgeImpl extends MinimalEObjectImpl.Container implements Edge {
 			case GraphPackage.EDGE__RELATION:
 				setRelation(RELATION_EDEFAULT);
 				return;
+			case GraphPackage.EDGE__DEGREE:
+				setDegree(DEGREE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -329,6 +379,8 @@ public class EdgeImpl extends MinimalEObjectImpl.Container implements Edge {
 				return target != null;
 			case GraphPackage.EDGE__RELATION:
 				return RELATION_EDEFAULT == null ? relation != null : !RELATION_EDEFAULT.equals(relation);
+			case GraphPackage.EDGE__DEGREE:
+				return degree != DEGREE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -345,6 +397,8 @@ public class EdgeImpl extends MinimalEObjectImpl.Container implements Edge {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (relation: ");
 		result.append(relation);
+		result.append(", degree: ");
+		result.append(degree);
 		result.append(')');
 		return result.toString();
 	}

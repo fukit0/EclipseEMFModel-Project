@@ -8,7 +8,6 @@ import EMFModel.Graph.Node;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -82,7 +81,7 @@ public class NodeImpl extends MinimalEObjectImpl.Container implements Node {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NodeImpl() {
+	protected NodeImpl() {
 		super();
 	}
 

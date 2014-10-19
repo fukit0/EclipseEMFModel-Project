@@ -62,6 +62,7 @@ public class EdgeItemProvider
 
 			addTargetPropertyDescriptor(object);
 			addRelationPropertyDescriptor(object);
+			addDegreePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -111,6 +112,28 @@ public class EdgeItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Degree feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addDegreePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Edge_degree_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Edge_degree_feature", "_UI_Edge_type"),
+				 GraphPackage.Literals.EDGE__DEGREE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns Edge.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -149,6 +172,7 @@ public class EdgeItemProvider
 
 		switch (notification.getFeatureID(Edge.class)) {
 			case GraphPackage.EDGE__RELATION:
+			case GraphPackage.EDGE__DEGREE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

@@ -5,10 +5,7 @@ package EMFModel.Graph.impl;
 import EMFModel.Graph.Graph;
 import EMFModel.Graph.GraphPackage;
 import EMFModel.Graph.Node;
-
 import java.util.Collection;
-import java.util.List;
-
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -39,7 +36,7 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 	 * @generated
 	 * @ordered
 	 */
-	private EList<Node> nodes;
+	protected EList<Node> nodes;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -48,8 +45,6 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 	 */
 	protected GraphImpl() {
 		super();
-		nodes = new EObjectContainmentEList<Node>(Node.class, this, GraphPackage.GRAPH__NODES);
-		
 	}
 
 	/**
