@@ -3,6 +3,7 @@
   <nodes name="A">
     <outgoing target="//@nodes.1" relation="child"/>
     <outgoing target="//@nodes.2" relation="child"/>
+    <outgoing target="//@nodes.17" relation="child"/>
   </nodes>
   <nodes name="B" incoming="//@nodes.0/@outgoing.0">
     <outgoing target="//@nodes.3" relation="child"/>
@@ -46,4 +47,8 @@
   </nodes>
   <nodes name="P" incoming="//@nodes.11/@outgoing.0"/>
   <nodes name="R" incoming="//@nodes.14/@outgoing.0"/>
+  <nodes name="S" incoming="//@nodes.0/@outgoing.2">
+    <outgoing target="//@nodes.18" relation="child"/>
+  </nodes>
+  <nodes name="T" incoming="//@nodes.17/@outgoing.0"/>
 </Graph:Graph>

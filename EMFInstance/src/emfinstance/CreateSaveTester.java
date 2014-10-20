@@ -48,14 +48,14 @@ public class CreateSaveTester {
 		findHusbandWifeRelation(myGraph.getNodes());
 	    findBrotherSisterRelation(myGraph.getNodes());
 	    
-	    List<Node> children = new ArrayList<Node>();
+	    /*List<Node> children = new ArrayList<Node>();
 	    
 	    for(int i=0; i<childList.size(); i++){
 	    	
 	    	children.add(childList.get(i));
-	    }
+	    }*/
 	    
-	    findCousinRecursive(children);
+	    //findCousinRecursive(children);
 	    
 	    // Save the graph
 	    //saveGraph();
@@ -192,6 +192,7 @@ public class CreateSaveTester {
 
 						}
 						
+						
 						findUncleAuntRelation(sourceNode,targetNode);
 						
 					}				
@@ -240,7 +241,7 @@ public class CreateSaveTester {
      */
 	public static void findUncleAuntRelation(Node x, Node y) {
 		// TODO Auto-generated method stub
-		
+		flag = 0;
 		
 		//List<Node> childList = new ArrayList<Node>();
 		//List<Node> childList2 = new ArrayList<Node>();
@@ -251,9 +252,9 @@ public class CreateSaveTester {
 				
 				if(e.getRelation().equals(CHILD_RELATION)){
 					
-					if(flag == 0){
+					//if(flag == 0){
 						childList.add(e.getTarget());
-					}
+				//	}
 
 					if(!isConnected(x, e.getTarget(), UNCLE_AUNT_RELATION)){
 						
@@ -270,9 +271,9 @@ public class CreateSaveTester {
 							
 				if(e.getRelation().equals(CHILD_RELATION)){
 					
-					if(flag == 0){
+					//if(flag == 0){
 						childList.add(e.getTarget());
-					}
+					//}
 
 					if(!isConnected(y, e.getTarget(), UNCLE_AUNT_RELATION)){
 						
@@ -282,8 +283,9 @@ public class CreateSaveTester {
 			}
 		}
 		
-		// findCousinRecursive(childList, 1);
-		flag++;
+		 findCousinRecursive(childList);
+		 childList.clear();
+		 flag++;
 	}
 	
 	public static int findCousinRecursive(List<Node> children){
