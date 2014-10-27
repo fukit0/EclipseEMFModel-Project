@@ -1,8 +1,6 @@
 package handler;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,14 +21,21 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.console.ConsolePlugin;
+import org.eclipse.ui.console.IConsole;
+import org.eclipse.ui.console.IConsoleConstants;
+import org.eclipse.ui.console.IConsoleManager;
+import org.eclipse.ui.console.IConsoleView;
+import org.eclipse.ui.console.MessageConsole;
+import org.eclipse.ui.console.MessageConsoleStream;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.internal.WorkbenchPage;
 
 import EMFModel.Graph.Edge;
 import EMFModel.Graph.Graph;
@@ -52,6 +57,8 @@ public class FindHandler extends AbstractHandler implements IHandler {
 		private final static String UNCLE_AUNT_RELATION = "uncle/aunt";
 		private final static String HUSBAND_WIFE_RELATION = "husband/wife";
 		private final static String CHILD_RELATION = "child";
+
+		private static final String CONSOLE_NAME = "my console";
 		
 	@Override
 	public void addHandlerListener(IHandlerListener handlerListener) {
@@ -78,6 +85,31 @@ public class FindHandler extends AbstractHandler implements IHandler {
 	      //MessageDialog.openInformation(shell, "Info",
 	        // "Please select a Java source file");
 	    //}
+	      
+	      IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
+			MessageDialog.openInformation(
+					window.getShell(),
+					"Test",
+					"Missing relations were found seccessfully!");
+			
+	      
+	      /*Display display = new Display();
+
+	        shell = new Shell(display);
+	        
+	        // the layout manager handle the layout
+	        // of the widgets in the container
+	        shell.setLayout(new FillLayout());
+	        
+	        //TODO add some widgets to the Shell
+	        shell.open();
+	        while (!shell.isDisposed()) {
+	            if (!display.readAndDispatch())
+	                display.sleep();
+	        }
+	        display.dispose();
+	        */
+	      
 	    return null;
 	  }
 
@@ -107,7 +139,24 @@ public class FindHandler extends AbstractHandler implements IHandler {
 	    }*/
 	    printGraph(myGraph.getNodes());
 	    write();
+	    
+	    
+	    
 	  }
+	  
+	  private static MessageConsole findConsole(String name) {
+		  // requires org.eclipse.ui.console plugin
+	      ConsolePlugin plugin = ConsolePlugin.getDefault();
+	      IConsoleManager conMan = plugin.getConsoleManager();
+	      IConsole[] existing = conMan.getConsoles();
+	      for (int i = 0; i < existing.length; i++)
+	         if (name.equals(existing[i].getName()))
+	            return (MessageConsole) existing[i];
+	      //no console found, so create a new one
+	      MessageConsole myConsole = new MessageConsole(name, null);
+	      conMan.addConsoles(new IConsole[]{myConsole});
+	      return myConsole;
+	   }
 
 	  private void write() {
 		// TODO Auto-generated method stub
@@ -188,21 +237,26 @@ public class FindHandler extends AbstractHandler implements IHandler {
 		public static void printGraph(EList<Node> nodes) {
 			// TODO Auto-generated method stub
 			
+			// Create a console instance and write our output
+			MessageConsole myConsole = findConsole(CONSOLE_NAME);
+		    MessageConsoleStream out = myConsole.newMessageStream();
+		    //out.println("Hello from Generic console sample action");
+		    
 			for (int i = 0; i < nodes.size(); i++) {
 				
 				for(Edge e : nodes.get(i).getOutgoing()){
-					System.out.println(nodes.get(i).getName());
-					System.out.print(e.getRelation().toString());
+					out.println(nodes.get(i).getName());
+					out.print(e.getRelation().toString());
 					if(e.getDegree()>0){
-						System.out.println(e.getDegree());
+						out.println(String.valueOf(e.getDegree()));
 					}
 					else{
-						System.out.print("\n");
+						out.print("\n");
 					}
-					System.out.println(e.getTarget().getName());
+					out.println(e.getTarget().getName());
 				}
 				
-				System.out.println("\n");
+				out.println("\n");
 			}
 		}
 

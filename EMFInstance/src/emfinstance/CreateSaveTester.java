@@ -1,7 +1,6 @@
 package emfinstance;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,12 +8,13 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EDataType.Internal.ConversionDelegate.Factory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 import EMFModel.Graph.Edge;
 import EMFModel.Graph.Graph;
@@ -60,7 +60,24 @@ public class CreateSaveTester {
 	    // Save the graph
 	    //saveGraph();
 	    
-	    printGraph(myGraph.getNodes());	  
+	    printGraph(myGraph.getNodes());
+	    //myGraph.toString();
+	    Display display = new Display();
+
+        Shell shell = new Shell(display);
+        
+        // the layout manager handle the layout
+        // of the widgets in the container
+        shell.setLayout(new FillLayout());
+        
+        //TODO add some widgets to the Shell
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        display.dispose();
+        
 	}
 	
 	
@@ -72,6 +89,7 @@ public class CreateSaveTester {
 	private static void saveGraph() {
 		// TODO Auto-generated method stub
 		try {
+			resource.toString();
 	        resource.save(Collections.EMPTY_MAP);
 	      } catch (IOException e) {
 	        e.printStackTrace();

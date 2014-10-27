@@ -1,98 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Graph:Graph xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:Graph="Graph">
-  <nodes name="A">
+  <nodes name="A" incoming="//@nodes.3/@outgoing.0">
     <outgoing target="//@nodes.1" relation="child"/>
     <outgoing target="//@nodes.2" relation="child"/>
-    <outgoing target="//@nodes.17" relation="child"/>
   </nodes>
-  <nodes name="B" incoming="//@nodes.0/@outgoing.0">
-    <outgoing target="//@nodes.3" relation="child"/>
+  <nodes name="B" incoming="//@nodes.0/@outgoing.0"/>
+  <nodes name="C" incoming="//@nodes.0/@outgoing.1"/>
+  <nodes name="D">
+    <outgoing target="//@nodes.0" relation="child"/>
     <outgoing target="//@nodes.4" relation="child"/>
-    <outgoing target="//@nodes.2" relation="brother/sister"/>
-    <outgoing target="//@nodes.5" relation="uncle/aunt"/>
-    <outgoing target="//@nodes.6" relation="uncle/aunt"/>
-    <outgoing target="//@nodes.17" relation="brother/sister"/>
-    <outgoing target="//@nodes.18" relation="uncle/aunt"/>
   </nodes>
-  <nodes name="C" incoming="//@nodes.0/@outgoing.1 //@nodes.1/@outgoing.2">
+  <nodes name="E" incoming="//@nodes.3/@outgoing.1">
     <outgoing target="//@nodes.5" relation="child"/>
-    <outgoing target="//@nodes.6" relation="child"/>
-    <outgoing target="//@nodes.3" relation="uncle/aunt"/>
-    <outgoing target="//@nodes.4" relation="uncle/aunt"/>
-    <outgoing target="//@nodes.17" relation="brother/sister"/>
-    <outgoing target="//@nodes.18" relation="uncle/aunt"/>
   </nodes>
-  <nodes name="D" incoming="//@nodes.1/@outgoing.0 //@nodes.2/@outgoing.2 //@nodes.5/@outgoing.1 //@nodes.6/@outgoing.1 //@nodes.17/@outgoing.1 //@nodes.18/@outgoing.0">
-    <outgoing target="//@nodes.7" relation="child"/>
-    <outgoing target="//@nodes.4" relation="brother/sister"/>
-    <outgoing target="//@nodes.8" relation="uncle/aunt"/>
-  </nodes>
-  <nodes name="E" incoming="//@nodes.1/@outgoing.1 //@nodes.2/@outgoing.3 //@nodes.5/@outgoing.2 //@nodes.6/@outgoing.2 //@nodes.17/@outgoing.2 //@nodes.18/@outgoing.1 //@nodes.3/@outgoing.1">
-    <outgoing target="//@nodes.8" relation="child"/>
-    <outgoing target="//@nodes.7" relation="uncle/aunt"/>
-  </nodes>
-  <nodes name="F" incoming="//@nodes.2/@outgoing.0 //@nodes.1/@outgoing.3 //@nodes.17/@outgoing.3 //@nodes.18/@outgoing.2">
-    <outgoing target="//@nodes.9" relation="child"/>
-    <outgoing target="//@nodes.3" relation="cousin" degree="1"/>
-    <outgoing target="//@nodes.4" relation="cousin" degree="1"/>
-    <outgoing target="//@nodes.6" relation="brother/sister"/>
-    <outgoing target="//@nodes.10" relation="uncle/aunt"/>
-  </nodes>
-  <nodes name="G" incoming="//@nodes.2/@outgoing.1 //@nodes.1/@outgoing.4 //@nodes.17/@outgoing.4 //@nodes.18/@outgoing.3 //@nodes.5/@outgoing.3">
-    <outgoing target="//@nodes.10" relation="child"/>
-    <outgoing target="//@nodes.3" relation="cousin" degree="1"/>
-    <outgoing target="//@nodes.4" relation="cousin" degree="1"/>
-    <outgoing target="//@nodes.9" relation="uncle/aunt"/>
-  </nodes>
-  <nodes name="H" incoming="//@nodes.3/@outgoing.0 //@nodes.9/@outgoing.1 //@nodes.10/@outgoing.1 //@nodes.4/@outgoing.1 //@nodes.8/@outgoing.1">
-    <outgoing target="//@nodes.11" relation="child"/>
-  </nodes>
-  <nodes name="I" incoming="//@nodes.4/@outgoing.0 //@nodes.9/@outgoing.2 //@nodes.10/@outgoing.2 //@nodes.3/@outgoing.2">
-    <outgoing target="//@nodes.12" relation="child"/>
-    <outgoing target="//@nodes.7" relation="cousin" degree="1"/>
-  </nodes>
-  <nodes name="J" incoming="//@nodes.5/@outgoing.0 //@nodes.6/@outgoing.3 //@nodes.10/@outgoing.3">
-    <outgoing target="//@nodes.13" relation="child"/>
-    <outgoing target="//@nodes.7" relation="cousin" degree="2"/>
-    <outgoing target="//@nodes.8" relation="cousin" degree="2"/>
-  </nodes>
-  <nodes name="K" incoming="//@nodes.6/@outgoing.0 //@nodes.5/@outgoing.4">
-    <outgoing target="//@nodes.14" relation="child"/>
-    <outgoing target="//@nodes.7" relation="cousin" degree="2"/>
-    <outgoing target="//@nodes.8" relation="cousin" degree="2"/>
-    <outgoing target="//@nodes.9" relation="cousin" degree="1"/>
-  </nodes>
-  <nodes name="L" incoming="//@nodes.7/@outgoing.0 //@nodes.13/@outgoing.0 //@nodes.14/@outgoing.1 //@nodes.12/@outgoing.0">
-    <outgoing target="//@nodes.15" relation="child"/>
-  </nodes>
-  <nodes name="M" incoming="//@nodes.8/@outgoing.0 //@nodes.13/@outgoing.1 //@nodes.14/@outgoing.2">
-    <outgoing target="//@nodes.11" relation="cousin" degree="2"/>
-  </nodes>
-  <nodes name="N" incoming="//@nodes.9/@outgoing.0 //@nodes.14/@outgoing.3">
-    <outgoing target="//@nodes.11" relation="cousin" degree="3"/>
-    <outgoing target="//@nodes.12" relation="cousin" degree="3"/>
-  </nodes>
-  <nodes name="O" incoming="//@nodes.10/@outgoing.0">
-    <outgoing target="//@nodes.16" relation="child"/>
-    <outgoing target="//@nodes.11" relation="cousin" degree="3"/>
-    <outgoing target="//@nodes.12" relation="cousin" degree="3"/>
-    <outgoing target="//@nodes.13" relation="cousin" degree="2"/>
-  </nodes>
-  <nodes name="P" incoming="//@nodes.11/@outgoing.0 //@nodes.16/@outgoing.0"/>
-  <nodes name="R" incoming="//@nodes.14/@outgoing.0">
-    <outgoing target="//@nodes.15" relation="cousin" degree="4"/>
-  </nodes>
-  <nodes name="S" incoming="//@nodes.0/@outgoing.2 //@nodes.1/@outgoing.5 //@nodes.2/@outgoing.4">
-    <outgoing target="//@nodes.18" relation="child"/>
-    <outgoing target="//@nodes.3" relation="uncle/aunt"/>
-    <outgoing target="//@nodes.4" relation="uncle/aunt"/>
-    <outgoing target="//@nodes.5" relation="uncle/aunt"/>
-    <outgoing target="//@nodes.6" relation="uncle/aunt"/>
-  </nodes>
-  <nodes name="T" incoming="//@nodes.17/@outgoing.0 //@nodes.1/@outgoing.6 //@nodes.2/@outgoing.5">
-    <outgoing target="//@nodes.3" relation="cousin" degree="1"/>
-    <outgoing target="//@nodes.4" relation="cousin" degree="1"/>
-    <outgoing target="//@nodes.5" relation="cousin" degree="1"/>
-    <outgoing target="//@nodes.6" relation="cousin" degree="1"/>
-  </nodes>
+  <nodes name="F" incoming="//@nodes.4/@outgoing.0"/>
 </Graph:Graph>
